@@ -16,14 +16,14 @@ public class Order extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
-    private int orderId;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "buyer_id")
     private User buyerId;
 
     @Column(name = "total_price")
-    private double totalPrice;
+    private Double totalPrice;
     @Enumerated(EnumType.STRING)
     private Status status;
 }

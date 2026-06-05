@@ -16,15 +16,15 @@ public class Product extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
-    private int productId;
-    @ManyToMany(fetch = FetchType.LAZY)
+    private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User userId;
     @Column(name = "product_name")
     private String productName;
     private String description;
     @Column(name = "product_price")
-    private double productPrice;
+    private Double productPrice;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category categoryId;

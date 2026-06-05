@@ -18,7 +18,7 @@ public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long userId;
+    private Long id;
 
     @Column(name = "username")
     private String username;
@@ -26,7 +26,7 @@ public class User extends BaseEntity {
     private String password;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
-    private Role roleId;
+    private UserRole roleId;
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
