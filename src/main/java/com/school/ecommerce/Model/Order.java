@@ -1,0 +1,29 @@
+package com.school.ecommerce.Model;
+
+import com.school.ecommerce.Audit.BaseEntity;
+import com.school.ecommerce.Enumeration.Status;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@Table(name = "orders")
+public class Order extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
+    private int orderId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "buyer_id")
+    private User buyerId;
+
+    @Column(name = "total_price")
+    private double totalPrice;
+    @Enumerated(EnumType.STRING)
+    private Status status;
+}
