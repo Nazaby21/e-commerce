@@ -1,4 +1,6 @@
 package com.school.ecommerce.Vo.Response;
 
-public record RoleResponseVo() {
+public record RoleResponseVo(
+        String roleName
+) {
 }

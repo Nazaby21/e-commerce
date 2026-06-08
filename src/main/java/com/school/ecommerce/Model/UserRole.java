@@ -1,6 +1,5 @@
 package com.school.ecommerce.Model;
 
-import com.school.ecommerce.Audit.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Table(name = "user_roles")
-public class UserRole extends BaseEntity {
+public class UserRole{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")

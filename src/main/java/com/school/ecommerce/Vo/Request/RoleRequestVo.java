@@ -1,4 +1,9 @@
 package com.school.ecommerce.Vo.Request;
 
-public record RoleRequestVo() {
+import jakarta.validation.constraints.NotBlank;
+
+public record RoleRequestVo(
+        @NotBlank(message = "Role name is require")
+        String roleName
+) {
 }
