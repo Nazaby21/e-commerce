@@ -24,7 +24,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public RoleResponseDto createRole(RoleRequestDto roleRequestDto) {
         if (userRoleRepository.existsByRoleName(roleRequestDto.getRoleName())) {
-            throw new ResourceNotFoundException(ErrorMessage.ROLE_NOT_FOUND);
+            throw new ResourceNotFoundException(ErrorMessage.ROLE_ALREADY_EXISTS);
         }
         UserRole userRole = userRoleMapper.roleDtoToEntity(roleRequestDto);
         UserRole savedUserRole = userRoleRepository.save(userRole);

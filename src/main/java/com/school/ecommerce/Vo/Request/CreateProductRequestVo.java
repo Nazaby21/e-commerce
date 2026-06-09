@@ -1,4 +1,11 @@
 package com.school.ecommerce.Vo.Request;
 
-public record CreateProductRequestVo() {
+import com.school.ecommerce.Enumeration.Status;
+
+public record CreateProductRequestVo(
+        String productName,
+        String description,
+        Double productPrice,
+        Status status
+) {
 }

@@ -1,6 +1,7 @@
 package com.school.ecommerce.Service.Impl;
 
 import com.school.ecommerce.Dto.Request.CreateUserRequestDto;
+import com.school.ecommerce.Dto.Request.UpdateUserRequestDto;
 import com.school.ecommerce.Dto.Response.UserResponseDto;
 import com.school.ecommerce.Exception.Constants.ErrorMessage;
 import com.school.ecommerce.Exception.Custom.ResourceNotFoundException;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -26,34 +28,47 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto createUser(CreateUserRequestDto createUserRequestDto) {
         if (userRepository.existsByEmail(createUserRequestDto.getEmail())) {
-            throw new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND);
+            throw new ResourceNotFoundException(ErrorMessage.EMAIL_ALREADY_EXISTS);
         }
 
-        UserRole role = userRoleRepository.findById(createUserRequestDto.getRoleId())
-                .orElseThrow(()  -> new ResourceNotFoundException(ErrorMessage.ROLE_NOT_FOUND));
+//        UserRole role = userRoleRepository.findById(createUserRequestDto.getRoleId())
+//                .orElseThrow(()  -> new ResourceNotFoundException(ErrorMessage.ROLE_NOT_FOUND));
         User user = userMapper.userDtoToEntity(createUserRequestDto);
-        user.setRole(role);
+//        user.setRole(role);
         User savedUser = userRepository.save(user);
         return userMapper.userEntityToDto(savedUser);
     }
 
     @Override
-    public UserResponseDto getUserByIdAndEmail(Long id, String email) {
-        return null;
+    public UserResponseDto getUserById(Long id) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND)
+        );
+
+        return userMapper.userEntityToDto(user);
     }
 
     @Override
     public List<UserResponseDto> getAllUsers() {
-        return List.of();
+        return userRepository.findAll()
+                .stream()
+                .map(userMapper::userEntityToDto)
+                .toList();
     }
 
     @Override
-    public UserResponseDto updateUser(Long id, CreateUserRequestDto createUserRequestDto) {
-        return null;
+    public UserResponseDto updateUser(Long id, UpdateUserRequestDto updateUserRequestDto) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND));
+        userMapper.updateUserFromDto(updateUserRequestDto, user);
+        User saveUser = userRepository.save(user);
+        return userMapper.userEntityToDto(saveUser);
     }
 
     @Override
     public void deleteUser(Long id) {
-
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND));
+        userRepository.delete(user);
     }
 }

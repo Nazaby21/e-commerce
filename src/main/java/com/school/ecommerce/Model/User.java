@@ -24,9 +24,9 @@ public class User extends BaseEntity {
     private String username;
     private String email;
     private String password;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id")
-    private UserRole role;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "role_id")
+//    private UserRole role;
     @Enumerated(EnumType.STRING)
     private Gender gender;
 

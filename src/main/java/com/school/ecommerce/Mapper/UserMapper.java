@@ -18,7 +18,7 @@ public interface UserMapper {
 
     // userDto to Entity
     @Mapping(target = "id",  ignore = true)
-    @Mapping(source = "roleId", target = "role.id")
+//    @Mapping(source = "roleId", target = "role.id")
     User userDtoToEntity(CreateUserRequestDto createUserRequestDto);
 
     // userDto to userVo
@@ -26,12 +26,14 @@ public interface UserMapper {
     UserResponseVo userDtoToVo(UserResponseDto userResponseDto);
 
     // userEntity to userDto
+//    @Mapping(source = "role.roleName", target = "roleName")
+    @Mapping(target = "role", ignore = true)
     UserResponseDto userEntityToDto(User user);
 
     // updateUser
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", ignore = true)
-    @Mapping(target = "role", ignore = true)
+//    @Mapping(target = "role", ignore = true)
     void updateUserFromDto(UpdateUserRequestDto updateUserRequestDto, @MappingTarget User user);
 }

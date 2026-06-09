@@ -1,4 +1,10 @@
 package com.school.ecommerce.Vo.Response;
 
-public record ProductResponseVo() {
+import com.school.ecommerce.Enumeration.Status;
+
+public record ProductResponseVo(
+        String productName,
+        String description,
+        Double productPrice,
+        Status status) {
 }

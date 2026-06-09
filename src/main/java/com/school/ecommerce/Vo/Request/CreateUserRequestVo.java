@@ -2,7 +2,6 @@ package com.school.ecommerce.Vo.Request;
 
 import com.school.ecommerce.Enumeration.Gender;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 
 public record CreateUserRequestVo(
         @NotBlank(message = "Please input your name")
