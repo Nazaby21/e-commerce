@@ -11,19 +11,20 @@ import com.school.ecommerce.Vo.Request.UpdateCategoryRequestVo;
 import com.school.ecommerce.Vo.Response.CategoryResponseVo;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/vi/category")
+@RequestMapping("/api/v1/category")
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
     private final CategoryMapper categoryMapper;
 
     @PostMapping
-    public ApiResponse<CategoryResponseVo> createCategory(@Valid @RequestBody CreateCategoryRequestVo createCategoryRequestVo){
+    public ApiResponse<CategoryResponseVo> createCategory(@Valid @RequestBody CreateCategoryRequestVo createCategoryRequestVo) {
         CreateCategoryRequestDto createCategoryRequestDto = categoryMapper.createCategoryVoToDto(createCategoryRequestVo);
         CategoryResponseDto category = categoryService.createCategory(createCategoryRequestDto);
         CategoryResponseVo categoryResponseVo = categoryMapper.categoryDtoToVo(category);
@@ -31,7 +32,7 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ApiResponse<List<CategoryResponseVo>> getAllCategories(){
+    public ApiResponse<List<CategoryResponseVo>> getAllCategories() {
         List<CategoryResponseVo> categoryResponseVo = categoryService.getCategories()
                 .stream()
                 .map(categoryMapper::categoryDtoToVo)
@@ -40,13 +41,13 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<CategoryResponseVo> getCategoryById(@PathVariable Long id){
+    public ApiResponse<CategoryResponseVo> getCategoryById(@PathVariable Long id) {
         CategoryResponseVo categoryResponseVo = categoryMapper.categoryDtoToVo(categoryService.getById(id));
         return ApiResponse.success(categoryResponseVo);
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<CategoryResponseVo> updateCategory(@PathVariable Long id, @Valid @RequestBody UpdateCategoryRequestVo updateCategoryRequestVo){
+    public ApiResponse<CategoryResponseVo> updateCategory(@PathVariable Long id, @Valid @RequestBody UpdateCategoryRequestVo updateCategoryRequestVo) {
         UpdateCategoryRequestDto updateCategoryRequestDto = categoryMapper.updateCategoryVoToDto(updateCategoryRequestVo);
         CategoryResponseDto categoryResponseDto = categoryService.updateCategory(id, updateCategoryRequestDto);
         CategoryResponseVo categoryResponseVo = categoryMapper.categoryDtoToVo(categoryResponseDto);

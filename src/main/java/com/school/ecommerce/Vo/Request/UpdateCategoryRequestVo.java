@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public record UpdateCategoryRequestVo(
         @NotBlank(message = "Category name is require")
-        String categoryName,
+        String categoryName,it
         String description
 ) {
 }
