@@ -1,9 +1,18 @@
 package com.school.ecommerce.Exception.Constants;
 
-public class ErrorMessage {
-    public static final String USER_NOT_FOUND = "User not found";
-    public static final String EMAIL_ALREADY_EXISTS = "Email already exists";
-    public static final String ROLE_NOT_FOUND = "Role not found";
-    public static final String ROLE_ALREADY_EXISTS = "Role already exists";
-    public static final String PRODUCT_NOT_FOUND = "Product not found";
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+
+@Getter
+@RequiredArgsConstructor
+public enum ErrorMessage {
+    SUCCESS("SUCCESS", "Success", HttpStatus.OK),
+    RESOURCE_NOT_FOUND("ERR_404", "%s with id %s not found", HttpStatus.NOT_FOUND),
+    RESOURCE_ALREADY_EXISTS("ERR_409", "%s with %s '%s' already exists", HttpStatus.CONFLICT),
+    INTERNAL_ERROR("ERR_500","Internal Error", HttpStatus.INTERNAL_SERVER_ERROR);
+
+    private final String errorCode;
+    private final String message;
+    private final HttpStatus status;
 }

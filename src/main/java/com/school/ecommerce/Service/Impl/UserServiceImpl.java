@@ -3,11 +3,10 @@ package com.school.ecommerce.Service.Impl;
 import com.school.ecommerce.Dto.Request.CreateUserRequestDto;
 import com.school.ecommerce.Dto.Request.UpdateUserRequestDto;
 import com.school.ecommerce.Dto.Response.UserResponseDto;
-import com.school.ecommerce.Exception.Constants.ErrorMessage;
+import com.school.ecommerce.Exception.Custom.ResourceAlreadyExistsException;
 import com.school.ecommerce.Exception.Custom.ResourceNotFoundException;
 import com.school.ecommerce.Mapper.UserMapper;
 import com.school.ecommerce.Model.User;
-import com.school.ecommerce.Model.UserRole;
 import com.school.ecommerce.Repository.UserRepository;
 import com.school.ecommerce.Repository.UserRoleRepository;
 import com.school.ecommerce.Service.UserService;
@@ -16,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -28,7 +26,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto createUser(CreateUserRequestDto createUserRequestDto) {
         if (userRepository.existsByEmail(createUserRequestDto.getEmail())) {
-            throw new ResourceNotFoundException(ErrorMessage.EMAIL_ALREADY_EXISTS);
+            throw ResourceAlreadyExistsException.byField("User", "email", createUserRequestDto.getEmail());
         }
 
 //        UserRole role = userRoleRepository.findById(createUserRequestDto.getRoleId())
@@ -42,7 +40,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto getUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND)
+                () -> ResourceNotFoundException.byId("User", id)
         );
 
         return userMapper.userEntityToDto(user);
@@ -59,7 +57,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto updateUser(Long id, UpdateUserRequestDto updateUserRequestDto) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND));
+                .orElseThrow(() -> ResourceNotFoundException.byId("User", id));
         userMapper.updateUserFromDto(updateUserRequestDto, user);
         User saveUser = userRepository.save(user);
         return userMapper.userEntityToDto(saveUser);
@@ -68,7 +66,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND));
+                .orElseThrow(() -> ResourceNotFoundException.byId("User", id));
         userRepository.delete(user);
     }
 }

@@ -7,7 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateCategoryRequestDto {
-    @NotBlank(message = "Category name is require")
     String categoryName;
-    String categoryDescription;
+    String description;
 }

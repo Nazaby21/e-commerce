@@ -4,6 +4,7 @@ package com.school.ecommerce.Controller;
 import com.school.ecommerce.Dto.Request.CreateUserRequestDto;
 import com.school.ecommerce.Dto.Request.UpdateUserRequestDto;
 import com.school.ecommerce.Dto.Response.UserResponseDto;
+import com.school.ecommerce.Exception.Dto.ApiResponse;
 import com.school.ecommerce.Mapper.UserMapper;
 import com.school.ecommerce.Service.UserService;
 import com.school.ecommerce.Vo.Request.CreateUserRequestVo;
@@ -23,30 +24,34 @@ public class UserController {
     private final UserMapper userMapper;
 
     @PostMapping
-    public UserResponseVo createUser(@Valid @RequestBody CreateUserRequestVo createUserRequestVo) {
+    public ApiResponse<UserResponseVo> createUser(@Valid @RequestBody CreateUserRequestVo createUserRequestVo) {
         CreateUserRequestDto createUserRequestDto = userMapper.createdUserVoToDto(createUserRequestVo);
         UserResponseDto userResponseDto = userService.createUser(createUserRequestDto);
-        return userMapper.userDtoToVo(userResponseDto);
+        UserResponseVo userResponseVo = userMapper.userDtoToVo(userResponseDto);
+        return ApiResponse.success(userResponseVo);
     }
 
     @GetMapping("/{id}")
-    public UserResponseVo getUserById(@PathVariable Long id){
-        return userMapper.userDtoToVo(userService.getUserById(id));
+    public ApiResponse<UserResponseVo> getUserById(@PathVariable Long id){
+        UserResponseVo userResponseVo = userMapper.userDtoToVo(userService.getUserById(id));
+        return ApiResponse.success(userResponseVo);
     }
 
     @GetMapping
-    public List<UserResponseVo> getAllUsers(){
-        return userService.getAllUsers()
+    public ApiResponse<List<UserResponseVo>> getAllUsers(){
+        List<UserResponseVo> userResponseVo = userService.getAllUsers()
                 .stream()
                 .map(userMapper::userDtoToVo)
                 .toList();
+        return ApiResponse.success(userResponseVo);
     }
 
     @PutMapping("/{id}")
-    public UserResponseVo updatedUser(@PathVariable Long id, @Valid @RequestBody UpdateUserRequestVo updateUserRequestVo) {
+    public ApiResponse<UserResponseVo> updatedUser(@PathVariable Long id, @Valid @RequestBody UpdateUserRequestVo updateUserRequestVo) {
         UpdateUserRequestDto updateUserRequestDto = userMapper.updateUserVoToDto(updateUserRequestVo);
         UserResponseDto userResponseDto = userService.updateUser(id, updateUserRequestDto);
-        return userMapper.userDtoToVo(userResponseDto);
+        UserResponseVo userResponseVo = userMapper.userDtoToVo(userResponseDto);
+        return ApiResponse.success(userResponseVo);
     }
 
     @DeleteMapping("/{id}")

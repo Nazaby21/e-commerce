@@ -1,4 +1,10 @@
 package com.school.ecommerce.Vo.Request;
 
-public record CreateCategoryRequestVo() {
+import jakarta.validation.constraints.NotBlank;
+
+public record CreateCategoryRequestVo(
+        @NotBlank(message = "Category name is require")
+        String categoryName,
+        String description
+) {
 }

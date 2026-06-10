@@ -14,6 +14,11 @@ spring:
       ddl-auto: update   # options: none, validate, update, create, create-drop
     show-sql: true
 
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    mapper:
+      sort-properties-alphabetically: false
+
   sql:
     init:
       mode: always

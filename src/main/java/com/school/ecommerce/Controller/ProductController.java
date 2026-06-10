@@ -3,6 +3,7 @@ package com.school.ecommerce.Controller;
 import com.school.ecommerce.Dto.Request.CreateProductRequestDto;
 import com.school.ecommerce.Dto.Request.UpdateProductRequestDto;
 import com.school.ecommerce.Dto.Response.ProductResponseDto;
+import com.school.ecommerce.Exception.Dto.ApiResponse;
 import com.school.ecommerce.Mapper.ProductMapper;
 import com.school.ecommerce.Service.ProductService;
 import com.school.ecommerce.Vo.Request.CreateProductRequestVo;
@@ -23,31 +24,35 @@ public class ProductController {
     private final ProductMapper productMapper;
 
     @PostMapping
-    public ProductResponseVo createProduct(@RequestBody CreateProductRequestVo createProductRequestVo){
+    public ApiResponse<ProductResponseVo> createProduct(@RequestBody CreateProductRequestVo createProductRequestVo){
         CreateProductRequestDto createProductRequestDto = productMapper.createdProductVoToDto(createProductRequestVo);
         ProductResponseDto product = productService.createProduct(createProductRequestDto);
-        return productMapper.productDtoToVo(product);
+        ProductResponseVo productResponseVo = productMapper.productDtoToVo(product);
+        return ApiResponse.success(productResponseVo);
     }
 
     @PutMapping("/{id}")
-    public ProductResponseVo updateProduct(@PathVariable Long id, @RequestBody UpdateProductRequestVo updateProductRequestVo){
+    public ApiResponse<ProductResponseVo> updateProduct(@PathVariable Long id, @RequestBody UpdateProductRequestVo updateProductRequestVo){
         UpdateProductRequestDto updateProductRequestDto = productMapper.updatedProductVoToDto(updateProductRequestVo);
         ProductResponseDto product = productService.updateProduct(id, updateProductRequestDto);
-        return productMapper.productDtoToVo(product);
+        ProductResponseVo productResponseVo = productMapper.productDtoToVo(product);
+        return ApiResponse.success(productResponseVo);
     }
 
     @GetMapping
-    public List<ProductResponseVo> getProducts(){
-        return productService.getProducts()
+    public ApiResponse<List<ProductResponseVo>> getProducts(){
+        List<ProductResponseVo> productResponseVos = productService.getProducts()
                 .stream()
                 .map(productMapper::productDtoToVo)
                 .toList();
+        return ApiResponse.success(productResponseVos);
     }
 
     @GetMapping("/{id}")
-    public ProductResponseVo getProductById(@PathVariable Long id){
+    public ApiResponse<ProductResponseVo> getProductById(@PathVariable Long id){
         ProductResponseDto productById = productService.getProductById(id);
-        return productMapper.productDtoToVo(productById);
+        ProductResponseVo productResponseVo = productMapper.productDtoToVo(productById);
+        return ApiResponse.success(productResponseVo);
     }
 
     @DeleteMapping("/{id}")
