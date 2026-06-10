@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.management.relation.Role;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,6 +25,9 @@ public class User extends BaseEntity {
     private String username;
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Product> products;
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "role_id")
 //    private UserRole role;

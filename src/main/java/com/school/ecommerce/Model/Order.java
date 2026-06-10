@@ -20,7 +20,7 @@ public class Order extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "buyer_id")
-    private User buyerId;
+    private User buyer;
 
     @Column(name = "total_price")
     private Double totalPrice;

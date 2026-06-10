@@ -11,7 +11,6 @@ import com.school.ecommerce.Vo.Request.UpdateCategoryRequestVo;
 import com.school.ecommerce.Vo.Response.CategoryResponseVo;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
