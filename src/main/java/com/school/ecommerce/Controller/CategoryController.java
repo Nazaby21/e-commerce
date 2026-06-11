@@ -23,7 +23,7 @@ public class CategoryController {
     private final CategoryMapper categoryMapper;
 
     @PostMapping
-    public ApiResponse<CategoryResponseVo> createCategory(@Valid @RequestBody CreateCategoryRequestVo createCategoryRequestVo){
+    public ApiResponse<CategoryResponseVo> createCategory( @RequestBody CreateCategoryRequestVo createCategoryRequestVo){
         CreateCategoryRequestDto createCategoryRequestDto = categoryMapper.createCategoryVoToDto(createCategoryRequestVo);
         CategoryResponseDto category = categoryService.createCategory(createCategoryRequestDto);
         CategoryResponseVo categoryResponseVo = categoryMapper.categoryDtoToVo(category);
@@ -46,7 +46,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<CategoryResponseVo> updateCategory(@PathVariable Long id, @Valid @RequestBody UpdateCategoryRequestVo updateCategoryRequestVo){
+    public ApiResponse<CategoryResponseVo> updateCategory(@PathVariable Long id, @RequestBody UpdateCategoryRequestVo updateCategoryRequestVo){
         UpdateCategoryRequestDto updateCategoryRequestDto = categoryMapper.updateCategoryVoToDto(updateCategoryRequestVo);
         CategoryResponseDto categoryResponseDto = categoryService.updateCategory(id, updateCategoryRequestDto);
         CategoryResponseVo categoryResponseVo = categoryMapper.categoryDtoToVo(categoryResponseDto);

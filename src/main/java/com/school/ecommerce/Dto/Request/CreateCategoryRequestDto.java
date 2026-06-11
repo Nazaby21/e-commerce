@@ -1,6 +1,5 @@
 package com.school.ecommerce.Dto.Request;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -7,10 +7,7 @@ import com.school.ecommerce.Model.Category;
 import com.school.ecommerce.Vo.Request.CreateCategoryRequestVo;
 import com.school.ecommerce.Vo.Request.UpdateCategoryRequestVo;
 import com.school.ecommerce.Vo.Response.CategoryResponseVo;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
@@ -20,6 +17,7 @@ public interface CategoryMapper {
     UpdateCategoryRequestDto updateCategoryVoToDto(UpdateCategoryRequestVo updateCategoryRequestVo);
 
     // categoryDto to Entity
+    @Mapping(target = "id", ignore = true)
     Category categoryDtoToEntity(CreateCategoryRequestDto createCategoryRequestDto);
 
     // categoryEntity to Dto
@@ -30,5 +28,6 @@ public interface CategoryMapper {
 
     //updateCategory
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
     void updateCategoryFromDto(UpdateCategoryRequestDto updateCategoryRequestDto, @MappingTarget Category category);
 }

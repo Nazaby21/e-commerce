@@ -10,6 +10,7 @@ import com.school.ecommerce.Model.Category;
 import com.school.ecommerce.Repository.CategoryRepository;
 import com.school.ecommerce.Service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponseDto createCategory(CreateCategoryRequestDto createCategoryRequestDto) {
+        log.info("createCategory : ${createCategoryRequestDto.getCategoryName()}");
         if (categoryRepository.existsByCategoryName(createCategoryRequestDto.getCategoryName())) {
             throw ResourceAlreadyExistsException.byField("Category", "name", createCategoryRequestDto.getCategoryName());
         }
