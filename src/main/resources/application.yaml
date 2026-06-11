@@ -5,7 +5,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/ecommerce
     username: postgres
-    password: N@zaby
+    password: 123
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -15,7 +15,7 @@ spring:
     show-sql: true
 
   jackson:
-    property-naming-strategy: SNAKE_CASE
+#    property-naming-strategy: SNAKE_CASE
     mapper:
       sort-properties-alphabetically: false
 

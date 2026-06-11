@@ -17,11 +17,13 @@ public interface ProductMapper {
 
     // productDto to Entity
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "userId", ignore = true)
-    @Mapping(target = "categoryId", ignore = true)
+    @Mapping(source = "userId", target = "user.id")
+    @Mapping(source = "categoryId", target = "category.id")
     Product productDtoToEntity(CreateProductRequestDto createProductRequestDto);
 
     // productEntity to Dto
+    @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "category.id", target = "categoryId")
     ProductResponseDto productEntityToDto(Product product);
 
     // productDto to Vo
@@ -29,8 +31,8 @@ public interface ProductMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "userId", ignore = true)
-    @Mapping(target = "categoryId", ignore = true)
+    @Mapping(target = "user.id", ignore = true)
+    @Mapping(target = "category.id", ignore = true)
     @Mapping(target = "status", ignore = true)
     void updateProductFromDto(UpdateProductRequestDto updateProductRequestDto, @MappingTarget Product product);
 }

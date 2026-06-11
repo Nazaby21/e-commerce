@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -19,4 +21,6 @@ public class Category extends BaseEntity {
     @Column(name = "category_name")
     private String categoryName;
     private String description;
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 }

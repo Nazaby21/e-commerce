@@ -19,7 +19,7 @@ public class Product extends BaseEntity {
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
     @Column(name = "product_name")
     private String productName;
     private String description;
@@ -27,7 +27,7 @@ public class Product extends BaseEntity {
     private Double productPrice;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
-    private Category categoryId;
+    private Category category;
     @Enumerated(EnumType.STRING)
     private Status status;
 }
