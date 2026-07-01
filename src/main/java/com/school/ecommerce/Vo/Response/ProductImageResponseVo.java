@@ -1,4 +1,0 @@
-package com.school.ecommerce.Vo.Response;
-
-public record ProductImageResponseVo() {
-}
