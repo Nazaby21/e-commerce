@@ -27,9 +27,9 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user")
     private List<Product> products;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "role_id")
-//    private UserRole role;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    private UserRole role;
     @Enumerated(EnumType.STRING)
     private Gender gender;
 

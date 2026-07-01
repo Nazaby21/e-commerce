@@ -2,6 +2,7 @@ package com.school.ecommerce.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.school.ecommerce.enumeration.Gender;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 

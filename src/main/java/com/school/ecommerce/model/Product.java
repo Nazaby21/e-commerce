@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -28,6 +30,8 @@ public class Product extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<StockTransaction> stockTransactions;
     @Enumerated(EnumType.STRING)
     private Status status;
 }

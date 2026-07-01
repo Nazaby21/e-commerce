@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RoleResponseDto {
+    Long id;
     @JsonProperty("role_name")
     private String roleName;
     private String description;

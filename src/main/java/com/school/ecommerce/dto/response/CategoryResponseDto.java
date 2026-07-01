@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CategoryResponseDto {
+    Long id;
     @JsonProperty("category_name")
     String categoryName;
     String description;

@@ -18,17 +18,15 @@ public interface UserMapper {
 
     // userDto to Entity
     @Mapping(target = "id",  ignore = true)
-//    @Mapping(source = "roleId", target = "role.id")
+    @Mapping(target = "role", ignore = true)
     @Mapping(target = "products", ignore = true)
     User userDtoToEntity(CreateUserRequestDto createUserRequestDto);
 
     // userDto to userVo
-    @Mapping(target = "roleName", ignore = true)
     UserResponseVo userDtoToVo(UserResponseDto userResponseDto);
 
     // userEntity to userDto
-//    @Mapping(source = "role.roleName", target = "roleName")
-    @Mapping(target = "role", ignore = true)
+    @Mapping(source = "role.roleName", target = "roleName")
     UserResponseDto userEntityToDto(User user);
 
     // updateUser
@@ -36,6 +34,6 @@ public interface UserMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", ignore = true)
     @Mapping(target = "products", ignore = true)
-//    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "role", ignore = true)
     void updateUserFromDto(UpdateUserRequestDto updateUserRequestDto, @MappingTarget User user);
 }

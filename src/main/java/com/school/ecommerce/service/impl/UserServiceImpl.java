@@ -7,6 +7,7 @@ import com.school.ecommerce.exception.Custom.ResourceAlreadyExistsException;
 import com.school.ecommerce.exception.Custom.ResourceNotFoundException;
 import com.school.ecommerce.mapper.UserMapper;
 import com.school.ecommerce.model.User;
+import com.school.ecommerce.model.UserRole;
 import com.school.ecommerce.repository.UserRepository;
 import com.school.ecommerce.repository.UserRoleRepository;
 import com.school.ecommerce.service.UserService;
@@ -28,11 +29,10 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByEmail(createUserRequestDto.getEmail())) {
             throw ResourceAlreadyExistsException.byField("User", "email", createUserRequestDto.getEmail());
         }
-
-//        UserRole role = userRoleRepository.findById(createUserRequestDto.getRoleId())
-//                .orElseThrow(()  -> new ResourceNotFoundException(ErrorMessage.ROLE_NOT_FOUND));
         User user = userMapper.userDtoToEntity(createUserRequestDto);
-//        user.setRole(role);
+        UserRole role = userRoleRepository.findById(createUserRequestDto.getRoleId())
+                .orElseThrow(() -> new RuntimeException ("Role not found"));
+        user.setRole(role);
         User savedUser = userRepository.save(user);
         return userMapper.userEntityToDto(savedUser);
     }
@@ -58,7 +58,15 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto updateUser(Long id, UpdateUserRequestDto updateUserRequestDto) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> ResourceNotFoundException.byId("User", id));
+        if(!user.getEmail().equals(updateUserRequestDto.getEmail()) && userRepository.existsByEmail(updateUserRequestDto.getEmail())) {
+            throw ResourceAlreadyExistsException.byField("User", "email", updateUserRequestDto.getEmail());
+        }
         userMapper.updateUserFromDto(updateUserRequestDto, user);
+        if (updateUserRequestDto.getRoleId() != null) {
+            UserRole role =  userRoleRepository.findById(updateUserRequestDto.getRoleId())
+                    .orElseThrow(() -> ResourceNotFoundException.byId("Role", id));
+            user.setRole(role);
+        }
         User saveUser = userRepository.save(user);
         return userMapper.userEntityToDto(saveUser);
     }

@@ -1,12 +1,16 @@
 package com.school.ecommerce.exception.Handler;
 
 import com.school.ecommerce.exception.Constants.ErrorMessage;
+import com.school.ecommerce.exception.Custom.BadRequestException;
 import com.school.ecommerce.exception.Custom.ResourceAlreadyExistsException;
 import com.school.ecommerce.exception.Custom.ResourceNotFoundException;
+import com.school.ecommerce.exception.Dto.ApiResponse;
 import com.school.ecommerce.exception.Dto.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.xml.bind.ValidationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -42,6 +46,19 @@ public class GlobalExceptionHandler {
                 .status(errorMessage.getStatus())
                 .body(errorResponse);
     }
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorResponse> handleBadRequest(BadRequestException ex, HttpServletRequest httpServletRequest) {
+        ErrorMessage errorMessage = ex.getErrorMessage();
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .code(errorMessage.getErrorCode())
+                .message(ex.getMessage())
+                .status(errorMessage.getStatus().value())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return ResponseEntity
+                .status(errorMessage.getStatus())
+                .body(errorResponse);
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleAll(Exception ex, HttpServletRequest httpServletRequest) {
@@ -58,29 +75,28 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<ErrorResponse> handleNullPointerException(NullPointerException ex, HttpServletRequest httpServletRequest) {
-        ErrorResponse errorResponse = ErrorResponse.builder().message(
-                ex.getMessage()
-        ).status(500).timestamp(LocalDateTime.now()).build();
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .message(ex.getMessage())
+                .status(500)
+                .timestamp(LocalDateTime.now()).build();
 
-return ResponseEntity
+        return ResponseEntity
                 .status(errorResponse.getStatus())
                 .body(errorResponse);
     }
 
-    @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<ErrorResponse> handleValidationException(
-            ValidationException ex,
-            HttpServletRequest httpServletRequest) {
-
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .code(ErrorMessage.VALIDATION_ERROR.getErrorCode())
-                .message(ex.getMessage())
-                .status(ErrorMessage.VALIDATION_ERROR.getStatus().value())
-                .timestamp(LocalDateTime.now())
-                .build();
-
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse<Void>> handleValidationException(MethodArgumentNotValidException exception) {
+        FieldError error = exception.getBindingResult()
+                .getFieldErrors()
+                .get(0);
         return ResponseEntity
-                .status(ErrorMessage.VALIDATION_ERROR.getStatus())
-                .body(errorResponse);
+                .badRequest()
+                .body(
+                        ApiResponse.error(
+                                "VALIDATION_FAILED",
+                                error.getDefaultMessage()
+                        )
+                );
     }
 }

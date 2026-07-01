@@ -11,7 +11,8 @@ public enum ErrorMessage {
     RESOURCE_NOT_FOUND("ERR_404", "%s with id %s not found", HttpStatus.NOT_FOUND),
     RESOURCE_ALREADY_EXISTS("ERR_409", "%s with %s '%s' already exists", HttpStatus.CONFLICT),
     INTERNAL_ERROR("ERR_500","Internal Error", HttpStatus.INTERNAL_SERVER_ERROR),
-    VALIDATION_ERROR("ERR_500","Internal Error", HttpStatus.INTERNAL_SERVER_ERROR);
+    VALIDATION_ERROR("ERR_500","Internal Error", HttpStatus.INTERNAL_SERVER_ERROR),
+    INVALID_GENDER("ERR_400", "Gender must be MALE or FEMALE", HttpStatus.BAD_REQUEST);
 
     private final String errorCode;
     private final String message;
