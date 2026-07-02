@@ -22,11 +22,13 @@ public class StockTransaction extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
+    @Enumerated(EnumType.STRING)
     @Column(name = "stock_type")
     private StockType stockType;
     private Integer quantity;
     @Column(name = "transaction_date")
     private LocalDateTime transactionDate;
+    @Enumerated(EnumType.STRING)
     @Column(name = "reference_type")
     private ReferenceType referenceType;
 }

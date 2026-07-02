@@ -2,15 +2,15 @@ package com.school.ecommerce.controller;
 
 import com.school.ecommerce.dto.request.RoleRequestDto;
 import com.school.ecommerce.dto.response.RoleResponseDto;
+import com.school.ecommerce.exception.Dto.ApiResponse;
 import com.school.ecommerce.mapper.UserRoleMapper;
 import com.school.ecommerce.service.UserRoleService;
 import com.school.ecommerce.vo.request.RoleRequestVo;
 import com.school.ecommerce.vo.response.RoleResponseVo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/role")
@@ -24,5 +24,14 @@ public class UserRoleController {
         RoleRequestDto roleRequestDto = userRoleMapper.roleVoToDto(roleRequestVo);
         RoleResponseDto roleResponseDto = userRoleService.createRole(roleRequestDto);
         return userRoleMapper.roleDtoToVo(roleResponseDto);
+    }
+
+    @GetMapping
+    public ApiResponse<List<RoleResponseVo>> getRoles() {
+        List<RoleResponseVo> role = userRoleService.getAllRoles()
+                .stream()
+                .map(userRoleMapper::roleDtoToVo)
+                .toList();
+        return ApiResponse.success(role);
     }
 }

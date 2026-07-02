@@ -28,19 +28,12 @@ public class UserRoleServiceImpl implements UserRoleService {
         UserRole savedUserRole = userRoleRepository.save(userRole);
         return userRoleMapper.roleEntityToDto(savedUserRole);
     }
-
-    @Override
-    public RoleResponseDto getRoleById(Long id) {
-        return null;
-    }
-
     @Override
     public List<RoleResponseDto> getAllRoles() {
-        return List.of();
+        return userRoleRepository.findAll()
+                .stream()
+                .map(userRoleMapper::roleEntityToDto)
+                .toList();
     }
 
-    @Override
-    public RoleResponseDto updateRole(Long id, RoleRequestDto roleRequestDto) {
-        return null;
-    }
 }

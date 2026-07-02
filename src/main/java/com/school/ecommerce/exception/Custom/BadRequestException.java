@@ -15,7 +15,7 @@ public class BadRequestException extends RuntimeException {
     {
         return new BadRequestException(
                 String.format(
-                        ErrorMessage.RESOURCE_ALREADY_EXISTS.getMessage()
+                        ErrorMessage.VALIDATION_ERROR.getMessage()
                 )
         );
     }

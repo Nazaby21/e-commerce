@@ -32,6 +32,7 @@ public class Product extends BaseEntity {
     private Category category;
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<StockTransaction> stockTransactions;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     @Enumerated(EnumType.STRING)
     private Status status;
 }

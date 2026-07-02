@@ -19,10 +19,10 @@ public class OrderItem extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    private Order orderId;
+    private Order order;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
-    private Product productId;
+    private Product product;
     private int quantity;
     private Double price;
 }

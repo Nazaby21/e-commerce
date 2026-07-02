@@ -22,4 +22,16 @@ public class ResourceAlreadyExistsException extends RuntimeException{
                 )
         );
     }
+
+    public static ResourceAlreadyExistsException byName(String resourceName, String productName, Object value )
+    {
+        return new ResourceAlreadyExistsException(
+                String.format(
+                        ErrorMessage.RESOURCE_ALREADY_EXISTS.getMessage(),
+                        resourceName,
+                        productName,
+                        value
+                )
+        );
+    }
 }

@@ -9,5 +9,4 @@ import lombok.Setter;
 public class CreateOrderRequestDto {
     private Double totalPrice;
     private Status status;
-
 }
