@@ -3,14 +3,17 @@ package com.school.ecommerce.model;
 import com.school.ecommerce.audit.BaseEntity;
 import com.school.ecommerce.enumeration.Status;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "orders")
 public class Order extends BaseEntity {
     @Id
@@ -23,7 +26,9 @@ public class Order extends BaseEntity {
     private User buyer;
     @Column(name = "total_price")
     private Double totalPrice;
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    @Builder.Default
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<OrderItem> orderItems = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     private Status status;
 }

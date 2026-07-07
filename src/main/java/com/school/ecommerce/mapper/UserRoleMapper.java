@@ -14,6 +14,7 @@ public interface UserRoleMapper {
     RoleRequestDto roleVoToDto(RoleRequestVo roleRequestVo);
 
     // roleDto to Entity
+    @Mapping(target = "id", ignore = true)
     UserRole roleDtoToEntity(RoleRequestDto roleRequestDto);
 
     // roleDto to Vo

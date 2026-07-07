@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,16 +24,19 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
     @Column(name = "product_name")
-    private String productName;
+    private String name;
     private String description;
     @Column(name = "product_price")
-    private Double productPrice;
+    private Double price;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<StockTransaction> stockTransactions;
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<OrderItem> orderItems = new ArrayList<>();
+    @OneToOne(mappedBy = "product", fetch = FetchType.EAGER)
+    private StockBalance stockBalance;
     @Enumerated(EnumType.STRING)
     private Status status;
 }

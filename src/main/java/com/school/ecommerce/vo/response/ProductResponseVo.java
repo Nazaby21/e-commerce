@@ -5,14 +5,13 @@ import com.school.ecommerce.enumeration.Status;
 
 public record ProductResponseVo(
         Long id,
-        @JsonProperty("user_id")
-        Long userId,
         @JsonProperty("category_id")
         Long categoryId,
         @JsonProperty("product_name")
-        String productName,
+        String name,
         String description,
+        Integer quantity,
         @JsonProperty("product_price")
-        Double productPrice,
-        Status status) {
+        Double price
+) {
 }

@@ -19,7 +19,7 @@ public class Category extends BaseEntity {
     @Column(name = "category_id")
     private Long id;
     @Column(name = "category_name")
-    private String categoryName;
+    private String name;
     private String description;
     @OneToMany(mappedBy = "category")
     private List<Product> products;

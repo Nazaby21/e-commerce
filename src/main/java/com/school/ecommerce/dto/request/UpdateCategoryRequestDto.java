@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 public class UpdateCategoryRequestDto {
     @JsonProperty("category_name")
-    String categoryName;
-    String description;
+    private String categoryName;
+    private String description;
 }

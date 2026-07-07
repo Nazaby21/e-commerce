@@ -13,9 +13,8 @@ public class CreateProductRequestDto {
     @JsonProperty("category_id")
     private Long categoryId;
     @JsonProperty("product_name")
-    private String productName;
+    private String name;
     private String description;
     @JsonProperty("product_price")
-    private Double productPrice;
-    private Status status;
+    private Double price;
 }

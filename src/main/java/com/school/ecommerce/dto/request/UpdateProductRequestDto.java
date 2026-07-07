@@ -8,8 +8,8 @@ import lombok.Setter;
 @Setter
 public class UpdateProductRequestDto {
     @JsonProperty("product_name")
-    private String productName;
+    private String name;
     private String description;
     @JsonProperty("product_price")
-    private Double productPrice;
+    private Double price;
 }

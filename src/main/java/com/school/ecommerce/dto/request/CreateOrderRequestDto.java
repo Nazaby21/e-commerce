@@ -1,12 +1,15 @@
 package com.school.ecommerce.dto.request;
 
-import com.school.ecommerce.enumeration.Status;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
 public class CreateOrderRequestDto {
-    private Double totalPrice;
-    private Status status;
+    @JsonProperty("buyer_id")
+    private Long BuyerId;
+    private List<CreateOrderItemRequestDto> items;
 }

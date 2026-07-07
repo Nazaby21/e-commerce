@@ -20,5 +20,5 @@ public class ProductImage extends BaseEntity {
     @JoinColumn(name = "product_id")
     private Product product;
     @Column(name = "product_name")
-    private String productName;
+    private String name;
 }

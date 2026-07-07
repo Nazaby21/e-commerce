@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record UpdateProductRequestVo(
         @JsonProperty("product_name")
-        String productName,
+        String name,
         String description,
         @JsonProperty("product_price")
-        Double productPrice
+        Double price
 ) {
 }

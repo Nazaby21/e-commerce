@@ -9,14 +9,12 @@ import lombok.Setter;
 @Setter
 public class ProductResponseDto {
     private Long id;
-    @JsonProperty("user_id")
-    private Long userId;
     @JsonProperty("category_id")
     private Long categoryId;
     @JsonProperty("product_name")
-    private String productName;
+    private String name;
     private String description;
+    private Integer quantity;
     @JsonProperty("product_price")
-    private Double productPrice;
-    private Status status;
+    private Double price;
 }

@@ -32,8 +32,8 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryRepository categoryRepository;
     @Override
     public ProductResponseDto createProduct(CreateProductRequestDto createProductRequestDto) {
-        if (productRepository.existsByProductName(createProductRequestDto.getProductName())) {
-            throw ResourceAlreadyExistsException.byName("Product", "product name", createProductRequestDto.getProductName());
+        if (productRepository.existsByName(createProductRequestDto.getName())) {
+            throw ResourceAlreadyExistsException.byName("Product", "product name", createProductRequestDto.getName());
         }
         userRepository.findById(createProductRequestDto.getUserId())
                 .orElseThrow(() -> ResourceNotFoundException.byId("User", createProductRequestDto.getUserId()));

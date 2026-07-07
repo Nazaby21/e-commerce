@@ -19,11 +19,13 @@ public interface ProductMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "userId", target = "user.id")
     @Mapping(source = "categoryId", target = "category.id")
+    @Mapping(target = "stockTransactions", ignore = true)
+    @Mapping(target = "orderItems", ignore = true)
     Product productDtoToEntity(CreateProductRequestDto createProductRequestDto);
 
     // productEntity to Dto
-    @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "category.id", target = "categoryId")
+    @Mapping(source = "stockBalance.quantity", target = "quantity")
     ProductResponseDto productEntityToDto(Product product);
 
     // productDto to Vo
@@ -34,5 +36,7 @@ public interface ProductMapper {
     @Mapping(target = "user.id", ignore = true)
     @Mapping(target = "category.id", ignore = true)
     @Mapping(target = "status", ignore = true)
+    @Mapping(target = "stockTransactions", ignore = true)
+    @Mapping(target = "orderItems", ignore = true)
     void updateProductFromDto(UpdateProductRequestDto updateProductRequestDto, @MappingTarget Product product);
 }

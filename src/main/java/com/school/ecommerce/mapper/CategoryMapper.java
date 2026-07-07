@@ -18,9 +18,12 @@ public interface CategoryMapper {
 
     // categoryDto to Entity
     @Mapping(target = "id", ignore = true)
+    @Mapping(source = "categoryName", target = "name")
+    @Mapping(target = "products", ignore = true)
     Category categoryDtoToEntity(CreateCategoryRequestDto createCategoryRequestDto);
 
     // categoryEntity to Dto
+    @Mapping(source = "name", target = "categoryName")
     CategoryResponseDto categoryEntityToDto(Category category);
 
     //categoryDto to Vo
@@ -29,5 +32,7 @@ public interface CategoryMapper {
     //updateCategory
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
+    @Mapping(source = "categoryName", target = "name")
+    @Mapping(target = "products", ignore = true)
     void updateCategoryFromDto(UpdateCategoryRequestDto updateCategoryRequestDto, @MappingTarget Category category);
 }

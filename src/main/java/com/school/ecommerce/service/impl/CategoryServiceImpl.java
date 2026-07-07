@@ -25,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponseDto createCategory(CreateCategoryRequestDto createCategoryRequestDto) {
         log.info("createCategory : ${createCategoryRequestDto.getCategoryName()}");
-        if (categoryRepository.existsByCategoryName(createCategoryRequestDto.getCategoryName())) {
+        if (categoryRepository.existsByName(createCategoryRequestDto.getCategoryName())) {
             throw ResourceAlreadyExistsException.byField("Category", "name", createCategoryRequestDto.getCategoryName());
         }
         Category category = categoryMapper.categoryDtoToEntity(createCategoryRequestDto);
@@ -57,7 +57,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         String categoryName = updateCategoryRequestDto.getCategoryName();
         if (categoryName != null
-                && categoryRepository.existsByCategoryName(categoryName)) {
+                && categoryRepository.existsByName(categoryName)) {
 
             throw ResourceAlreadyExistsException.byField(
                     "Category",

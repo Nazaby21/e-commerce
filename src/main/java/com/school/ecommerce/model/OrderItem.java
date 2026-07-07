@@ -2,14 +2,14 @@ package com.school.ecommerce.model;
 
 import com.school.ecommerce.audit.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 @Table(name ="order_items")
 public class OrderItem extends BaseEntity {
     @Id
@@ -24,5 +24,6 @@ public class OrderItem extends BaseEntity {
     @JoinColumn(name = "product_id")
     private Product product;
     private int quantity;
-    private Double price;
+    @Column(name = "unit_price")
+    private Double unitPrice;
 }

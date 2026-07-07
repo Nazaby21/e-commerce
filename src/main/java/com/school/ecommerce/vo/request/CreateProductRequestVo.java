@@ -9,10 +9,9 @@ public record CreateProductRequestVo(
         @JsonProperty("category_id")
         Long categoryId,
         @JsonProperty("product_name")
-        String productName,
+        String name,
         String description,
         @JsonProperty("product_price")
-        Double productPrice,
-        Status status
+        Double price
 ) {
 }
