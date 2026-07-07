@@ -4,9 +4,7 @@ import com.school.ecommerce.audit.BaseEntity;
 import com.school.ecommerce.enumeration.ReferenceType;
 import com.school.ecommerce.enumeration.StockType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +12,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 @Table(name = "stock_transactions")
 public class StockTransaction extends BaseEntity {
     @Id
