@@ -5,16 +5,11 @@ import com.school.ecommerce.dto.response.StockResponseDto;
 import com.school.ecommerce.model.Product;
 import com.school.ecommerce.model.StockBalance;
 import com.school.ecommerce.model.StockTransaction;
-import com.school.ecommerce.vo.request.AddStockRequestVo;
-import com.school.ecommerce.vo.response.StockResponseVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface StockMapper {
-
-    // VO -> DTO
-    AddStockRequestDto addStockVoToDto(AddStockRequestVo vo);
 
     // DTO -> Entity
     @Mapping(target = "id", ignore = true)
@@ -26,7 +21,4 @@ public interface StockMapper {
     // Entity -> DTO
     @Mapping(source = "product.id", target = "productId")
     StockResponseDto stockEntityToDto(StockBalance stockBalance);
-
-    // DTO -> VO
-    StockResponseVo stockDtoToVo(StockResponseDto dto);
 }

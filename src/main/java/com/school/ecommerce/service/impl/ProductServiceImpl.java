@@ -3,12 +3,11 @@ package com.school.ecommerce.service.impl;
 import com.school.ecommerce.dto.request.CreateProductRequestDto;
 import com.school.ecommerce.dto.request.UpdateProductRequestDto;
 import com.school.ecommerce.dto.response.ProductResponseDto;
-import com.school.ecommerce.exception.Custom.ResourceAlreadyExistsException;
-import com.school.ecommerce.exception.Custom.ResourceNotFoundException;
+import com.school.ecommerce.exception.business.ResourceAlreadyExistsException;
+import com.school.ecommerce.exception.business.ResourceNotFoundException;
 import com.school.ecommerce.mapper.ProductMapper;
 import com.school.ecommerce.model.Product;
 import com.school.ecommerce.model.StockBalance;
-import com.school.ecommerce.model.User;
 import com.school.ecommerce.repository.CategoryRepository;
 import com.school.ecommerce.repository.ProductRepository;
 import com.school.ecommerce.repository.StockBalanceRepository;
@@ -17,9 +16,9 @@ import com.school.ecommerce.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -30,7 +29,9 @@ public class ProductServiceImpl implements ProductService {
     private final StockBalanceRepository stockBalanceRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
+
     @Override
+    @Transactional
     public ProductResponseDto createProduct(CreateProductRequestDto createProductRequestDto) {
         if (productRepository.existsByName(createProductRequestDto.getName())) {
             throw ResourceAlreadyExistsException.byName("Product", "product name", createProductRequestDto.getName());
@@ -51,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponseDto updateProduct(Long id, UpdateProductRequestDto updateProductRequestDto) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> ResourceNotFoundException.byId("Product", id ));
+                .orElseThrow(() -> ResourceNotFoundException.byId("Product", id));
 
         productMapper.updateProductFromDto(updateProductRequestDto, product);
         Product save = productRepository.save(product);
@@ -61,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponseDto getProductById(Long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> ResourceNotFoundException.byId("Product", id ));
+                .orElseThrow(() -> ResourceNotFoundException.byId("Product", id));
         return productMapper.productEntityToDto(product);
     }
 
@@ -76,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProductById(Long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> ResourceNotFoundException.byId("Product", id ));
+                .orElseThrow(() -> ResourceNotFoundException.byId("Product", id));
         productRepository.delete(product);
     }
 }

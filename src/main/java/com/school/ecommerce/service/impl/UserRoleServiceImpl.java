@@ -2,7 +2,7 @@ package com.school.ecommerce.service.impl;
 
 import com.school.ecommerce.dto.request.RoleRequestDto;
 import com.school.ecommerce.dto.response.RoleResponseDto;
-import com.school.ecommerce.exception.Custom.ResourceNotFoundException;
+import com.school.ecommerce.exception.business.ResourceAlreadyExistsException;
 import com.school.ecommerce.mapper.UserRoleMapper;
 import com.school.ecommerce.model.UserRole;
 import com.school.ecommerce.repository.UserRoleRepository;
@@ -19,15 +19,17 @@ import java.util.List;
 public class UserRoleServiceImpl implements UserRoleService {
     private final UserRoleRepository userRoleRepository;
     private final UserRoleMapper userRoleMapper;
+
     @Override
     public RoleResponseDto createRole(RoleRequestDto roleRequestDto) {
         if (userRoleRepository.existsByRoleName(roleRequestDto.getRoleName())) {
-            throw new ResourceNotFoundException("gsds");
+            throw ResourceAlreadyExistsException.byField("Role", "roleName", roleRequestDto.getRoleName());
         }
         UserRole userRole = userRoleMapper.roleDtoToEntity(roleRequestDto);
         UserRole savedUserRole = userRoleRepository.save(userRole);
         return userRoleMapper.roleEntityToDto(savedUserRole);
     }
+
     @Override
     public List<RoleResponseDto> getAllRoles() {
         return userRoleRepository.findAll()
@@ -35,5 +37,4 @@ public class UserRoleServiceImpl implements UserRoleService {
                 .map(userRoleMapper::roleEntityToDto)
                 .toList();
     }
-
 }

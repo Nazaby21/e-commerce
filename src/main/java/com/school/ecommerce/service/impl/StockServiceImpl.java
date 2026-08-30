@@ -3,7 +3,7 @@ package com.school.ecommerce.service.impl;
 import com.school.ecommerce.dto.request.AddStockRequestDto;
 import com.school.ecommerce.dto.response.StockResponseDto;
 import com.school.ecommerce.enumeration.StockType;
-import com.school.ecommerce.exception.Custom.ResourceNotFoundException;
+import com.school.ecommerce.exception.business.ResourceNotFoundException;
 import com.school.ecommerce.mapper.StockMapper;
 import com.school.ecommerce.model.Product;
 import com.school.ecommerce.model.StockBalance;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
 
 @Service
 @RequiredArgsConstructor
@@ -34,9 +33,7 @@ public class StockServiceImpl implements StockService {
                 .orElseThrow(() -> ResourceNotFoundException.byId("Product", addStockRequestDto.getProductId()));
 
         StockTransaction stockTransaction = stockMapper.toEntity(addStockRequestDto, product);
-
         stockTransaction.setStockType(StockType.IN_STOCK);
-
         stockTransactionRepository.save(stockTransaction);
 
         StockBalance stockBalance = stockBalanceRepository

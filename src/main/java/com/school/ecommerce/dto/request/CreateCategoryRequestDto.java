@@ -1,6 +1,7 @@
 package com.school.ecommerce.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,8 @@ import lombok.Setter;
 @Setter
 public class CreateCategoryRequestDto {
     @JsonProperty("category_name")
-    String categoryName;
-    String description;
+    @NotBlank(message = "categoryname is required")
+    private String categoryName;
+
+    private String description;
 }

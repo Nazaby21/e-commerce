@@ -3,8 +3,8 @@ package com.school.ecommerce.service.impl;
 import com.school.ecommerce.dto.request.CreateCategoryRequestDto;
 import com.school.ecommerce.dto.request.UpdateCategoryRequestDto;
 import com.school.ecommerce.dto.response.CategoryResponseDto;
-import com.school.ecommerce.exception.Custom.ResourceAlreadyExistsException;
-import com.school.ecommerce.exception.Custom.ResourceNotFoundException;
+import com.school.ecommerce.exception.business.ResourceAlreadyExistsException;
+import com.school.ecommerce.exception.business.ResourceNotFoundException;
 import com.school.ecommerce.mapper.CategoryMapper;
 import com.school.ecommerce.model.Category;
 import com.school.ecommerce.repository.CategoryRepository;
@@ -24,7 +24,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponseDto createCategory(CreateCategoryRequestDto createCategoryRequestDto) {
-        log.info("createCategory : ${createCategoryRequestDto.getCategoryName()}");
+        log.info("createCategory : {}", createCategoryRequestDto.getCategoryName());
         if (categoryRepository.existsByName(createCategoryRequestDto.getCategoryName())) {
             throw ResourceAlreadyExistsException.byField("Category", "name", createCategoryRequestDto.getCategoryName());
         }

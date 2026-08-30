@@ -6,15 +6,16 @@ import com.school.ecommerce.dto.response.OrderResponseDto;
 import com.school.ecommerce.enumeration.ReferenceType;
 import com.school.ecommerce.enumeration.Status;
 import com.school.ecommerce.enumeration.StockType;
-import com.school.ecommerce.exception.Custom.ResourceNotFoundException;
+import com.school.ecommerce.exception.business.InsufficientStockException;
+import com.school.ecommerce.exception.business.ResourceNotFoundException;
 import com.school.ecommerce.mapper.OrderMapper;
 import com.school.ecommerce.model.*;
 import com.school.ecommerce.repository.*;
 import com.school.ecommerce.service.OrderService;
-import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -30,6 +31,7 @@ public class OrderServiceImpl implements OrderService {
     private final StockTransactionRepository stockTransactionRepository;
 
     @Override
+    @Transactional
     public OrderResponseDto createOrder(CreateOrderRequestDto createOrderRequestDto) {
         User buyer = userRepository.findById(createOrderRequestDto.getBuyerId())
                 .orElseThrow(() -> ResourceNotFoundException.byId("User", createOrderRequestDto.getBuyerId()));
@@ -41,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
 
         double totalPrice = 0;
 
-        for(CreateOrderItemRequestDto itemRequestDto : createOrderRequestDto.getItems()) {
+        for (CreateOrderItemRequestDto itemRequestDto : createOrderRequestDto.getItems()) {
             Product product = productRepository.findById(itemRequestDto.getProductId())
                     .orElseThrow(() -> ResourceNotFoundException.byId("Product", itemRequestDto.getProductId()));
 
@@ -49,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
                     .orElseThrow(() -> ResourceNotFoundException.byId("StockBalance", product.getId()));
 
             if (stockBalance.getQuantity() < itemRequestDto.getQuantity()) {
-                throw new ValidationException("Insufficient stock.");
+                throw new InsufficientStockException("Insufficient stock for product id: " + product.getId());
             }
 
             stockBalance.setQuantity(
